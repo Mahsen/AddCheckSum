@@ -18,6 +18,10 @@ namespace AddCheckSum
             {
                 String FileName = args[0];
                 String Signature = args[1];
+                bool Fix16Byte = true;
+                try {
+                    Fix16Byte = bool.Parse(args[2]);
+                } catch (Exception er) {}
                 byte[] ByteFile;
                 byte[] HashSignature;
                 byte[] HashFile;
@@ -43,11 +47,14 @@ namespace AddCheckSum
                     return;
                 }
 
-                FileStream BinFile = new FileStream(FileName, FileMode.Open);                
-                if (BinFile.Length % 16 != 0)
+                FileStream BinFile = new FileStream(FileName, FileMode.Open);
+                if (Fix16Byte)
                 {
-                    Console.WriteLine("AddCheckSum : Error Length /16 .");
-                    return;
+                    if (BinFile.Length % 16 != 0)
+                    {
+                        Console.WriteLine("AddCheckSum : Error Length /16 .");
+                        return;
+                    }
                 }
                 Length = (int)BinFile.Length;
 

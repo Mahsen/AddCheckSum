@@ -25,3 +25,10 @@ I:\Ref\Project\Project .Net\By Me\AddCheckSum\v3 - MD5\AddCheckSum\obj\Debug\Add
 I:\Ref\Project\Project .Net\By Me\AddCheckSum\v3 - MD5\AddCheckSum\bin\Debug\AddCheckSum.exe.config
 I:\Ref\Project\Project .Net\By Me\AddCheckSum\v3 - MD5\AddCheckSum\bin\Debug\AddCheckSum.exe
 I:\Ref\Project\Project .Net\By Me\AddCheckSum\v3 - MD5\AddCheckSum\bin\Debug\AddCheckSum.pdb
+I:\Project\New_Structure\AddCheckSum\AddCheckSum\bin\Debug\AddCheckSum.exe.config
+I:\Project\New_Structure\AddCheckSum\AddCheckSum\bin\Debug\AddCheckSum.exe
+I:\Project\New_Structure\AddCheckSum\AddCheckSum\bin\Debug\AddCheckSum.pdb
+I:\Project\New_Structure\AddCheckSum\AddCheckSum\obj\Debug\AddCheckSum.csprojAssemblyReference.cache
+I:\Project\New_Structure\AddCheckSum\AddCheckSum\obj\Debug\AddCheckSum.csproj.CoreCompileInputs.cache
+I:\Project\New_Structure\AddCheckSum\AddCheckSum\obj\Debug\AddCheckSum.exe
+I:\Project\New_Structure\AddCheckSum\AddCheckSum\obj\Debug\AddCheckSum.pdb

@@ -18,14 +18,16 @@ namespace AddCheckSum
             {
                 String FileName = args[0];
                 String Signature = args[1];
-                bool Fix16Byte = true;
+                bool AddLength = false;
                 try {
-                    Fix16Byte = bool.Parse(args[2]);
+                    AddLength = bool.Parse(args[2]);
                 } catch (Exception er) {}
                 byte[] ByteFile;
                 byte[] HashSignature;
                 byte[] HashFile;
                 byte[] CombineFile;
+                byte[] LengthFile;
+                int RemainMod16 = 0;
 
                 int Length;
 
@@ -48,27 +50,43 @@ namespace AddCheckSum
                 }
 
                 FileStream BinFile = new FileStream(FileName, FileMode.Open);
-                if (Fix16Byte)
+                RemainMod16 = (int)(BinFile.Length % 16);
+                if (!AddLength)
                 {
-                    if (BinFile.Length % 16 != 0)
+                    if (RemainMod16 != 0)
                     {
                         Console.WriteLine("AddCheckSum : Error Length /16 .");
                         return;
                     }
                 }
-                Length = (int)BinFile.Length;
+                if (RemainMod16 != 0) {
+                    RemainMod16 = (16 - (RemainMod16 % 16));
+                }
+                Length = (int)BinFile.Length + RemainMod16;
 
                 ByteFile = new byte[Length];
-                BinFile.Read(ByteFile, 0, Length);
+                BinFile.Read(ByteFile, 0, (int)BinFile.Length);
+                if(RemainMod16 != 0)
+                {
+                    for (int Index=0; Index< RemainMod16; Index++)
+                    {
+                        ByteFile[((int)BinFile.Length)+Index] = 0;
+                    }
+                }
                 MD5 md5 = MD5.Create();
                 HashSignature = md5.ComputeHash(HashSignature);
                 CombineFile = Combine(ConvertHexStringToByteArray(Signature), ByteFile);
                 HashFile = md5.ComputeHash(CombineFile);
-                BinFile.Close();
-
-                File.Delete(FileName);
 
                 CombineFile = Combine(HashSignature, HashFile, ByteFile);
+                if (AddLength)
+                {
+                    LengthFile = Encoding.ASCII.GetBytes(BinFile.Length.ToString("0000000000000000"));
+                    CombineFile = Combine(LengthFile, CombineFile);
+                    Length += 16;
+                }
+                BinFile.Close();
+                File.Delete(FileName);
                 BinFile = new FileStream(FileName, FileMode.Create);                
                 BinFile.Write(CombineFile, 0, Length+32);
                 BinFile.Flush();
